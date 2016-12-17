@@ -23,7 +23,12 @@ const Surface = createSurface({
           <Exponent.GLView
             style={{ flex: 1 }}
             onContextCreate={(gl) => {
-                gl.enableLogging = true;
+                // gl.enableLogging = true;
+                const oldGetUniformLocation = gl.getUniformLocation;
+                gl.getUniformLocation = (...args) => {
+                  console.warn('omg');
+                  return oldGetUniformLocation.apply(gl, args);
+                }
                 onContextCreate(gl);
               }}
           />
